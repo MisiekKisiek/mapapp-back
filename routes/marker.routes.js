@@ -5,7 +5,8 @@ const passport = require("passport");
 module.exports = () => {
     const api = Router();
 
-    api.get('/getAllMarkers', MarkerController.getAllMarkers)
+    api.get('/getAllMarkers', MarkerController.getAllMarkers);
+    api.put('/editMarker', MarkerController.editMarker)
 
     return api;
 }
