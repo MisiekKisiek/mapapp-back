@@ -14,10 +14,13 @@ async function getAllMarkers(req, res, next) {
     });
 }
 
+async function addMarker(req, res, next) {
+    const { name, lat, lng, place, description } = req.body;
+}
+
 async function editMarker(req, res, next) {
     const { markerId, name, lat, lng, place, description } = req.body
-    console.log(markerId, name, lat, lng, place, description);
-    console.log('Edited');
+    console.log(typeof markerId);
     await UserMapapp.findOne({ _id: '5f61f2b9a1950532c93d78b0' }, (err, user) => {
         if (err) {
             return next(err)
@@ -25,17 +28,14 @@ async function editMarker(req, res, next) {
         if (!user) {
             return res.json("There is no user.")
         }
-        res.json(user.markers);
-        console.log(user)
-        // user = JSON.parse(JSON.stringify(user));
-        // console.log(user.markers);
-        // let userMarker = user.markers[user.markers.findIndex(e => markerId.toString() === e.id.toString())]
-        // userMarker = { id: markerId, name, lat, lng, place, description }
-        // user.markers[user.markers.findIndex(e => markerId.toString() === e.id.toString())] = userMarker;
-        // user.save((err) => {
-        //     if (err) return res.json(err);
-        // });
-        // return res.json("Task changed successfull");
+        user.markers[user.markers.findIndex(e => markerId === e.id.toString())] = {
+            id: markerId, name, lat: parseFloat(lat), lng: parseFloat(lng), place, description
+        }
+        console.log(user);
+        user.save((err) => {
+            if (err) return res.json(err);
+        });
+        return res.json("Task changed successfull");
     })
 }
 

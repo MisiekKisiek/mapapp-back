@@ -12,7 +12,7 @@ const MarkerSchema = new mongoose.Schema({
 const UserMapappSchema = new mongoose.Schema({
     login: { type: String, unique: true, lowercase: true, trim: true },
     email: { type: String, unique: true, lowercase: true, trim: true },
-    tasks: [MarkerSchema],
+    markers: [MarkerSchema],
 });
 
 UserMapappSchema.plugin(passportLocalMongoose, { usernameField: "login" });
