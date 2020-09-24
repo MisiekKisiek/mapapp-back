@@ -1,8 +1,8 @@
 const UserMapapp = require('../models/user.model');
 
 async function getAllMarkers(req, res, next) {
-    console.log('Sended markers');
-    await UserMapapp.findOne({ _id: '5f61f2b9a1950532c93d78b0' }, (err, user) => {
+    console.log(req.user);
+    await UserMapapp.findOne({ _id: req.user._id }, (err, user) => {
         if (err) {
             return next(err);
         }
@@ -21,7 +21,7 @@ async function addMarker(req, res, next) {
 async function editMarker(req, res, next) {
     const { markerId, name, lat, lng, place, description } = req.body
     console.log(typeof markerId);
-    await UserMapapp.findOne({ _id: '5f61f2b9a1950532c93d78b0' }, (err, user) => {
+    await UserMapapp.findOne({ _id: markerId }, (err, user) => {
         if (err) {
             return next(err)
         }

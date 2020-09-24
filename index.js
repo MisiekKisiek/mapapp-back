@@ -37,7 +37,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use("/auth", authRoutes());
-app.use('/api', markerRoutes())
+app.use('/api', jwtAuth, markerRoutes())
 
 app.listen(8005, (err) => {
     if (err) {

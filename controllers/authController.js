@@ -5,9 +5,9 @@ async function register(req, res, next) {
     const { login, email, password } = req.body;
     console.log(req.body);
 
-    const user = new User({ login, email });
+    const user = new UserMapapp({ login, email });
 
-    await User.register(user, password, (err) => {
+    await UserMapapp.register(user, password, (err) => {
         if (err) {
             if (err.code === 11000) {
                 console.log(err);
