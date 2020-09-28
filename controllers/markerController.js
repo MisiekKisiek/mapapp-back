@@ -1,15 +1,13 @@
 const UserMapapp = require('../models/user.model');
 
 async function getAllMarkers(req, res, next) {
-    console.log(req.user);
-    await UserMapapp.findOne({ _id: req.user._id }, (err, user) => {
+    await UserMapapp.findOne({ _id: req.user.id }, (err, user) => {
         if (err) {
             return next(err);
         }
         if (!user) {
             return res.json("There is no user.");
         }
-        console.log(user)
         return res.json(user);
     });
 }
@@ -20,18 +18,17 @@ async function addMarker(req, res, next) {
 
 async function editMarker(req, res, next) {
     const { markerId, name, lat, lng, place, description } = req.body
-    console.log(typeof markerId);
-    await UserMapapp.findOne({ _id: markerId }, (err, user) => {
+    await UserMapapp.findOne({ _id: req.user._id }, (err, user) => {
         if (err) {
             return next(err)
         }
         if (!user) {
             return res.json("There is no user.")
         }
-        user.markers[user.markers.findIndex(e => markerId === e.id.toString())] = {
-            id: markerId, name, lat: parseFloat(lat), lng: parseFloat(lng), place, description
-        }
-        console.log(user);
+        user.markers[user.markers.findIndex(e => markerId === e.id.toString())].lat = parseFloat(lat);
+        user.markers[user.markers.findIndex(e => markerId === e.id.toString())].lng = parseFloat(lng);
+        user.markers[user.markers.findIndex(e => markerId === e.id.toString())].place = place;
+        user.markers[user.markers.findIndex(e => markerId === e.id.toString())].description = description;
         user.save((err) => {
             if (err) return res.json(err);
         });
