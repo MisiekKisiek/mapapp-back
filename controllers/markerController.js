@@ -53,4 +53,21 @@ async function editMarker(req, res, next) {
     })
 }
 
-module.exports = { getAllMarkers, editMarker, addMarker }
+async function removeMarker(req, res, next) {
+    const { markerId } = req.body;
+    await UserMapapp.findOne({ _id: req.user._id }, (err, user) => {
+        if (err) {
+            return next(err)
+        }
+        if (!user) {
+            return res.json("There is no user.")
+        }
+        user.markers.splice(user.markers.findIndex(e => markerId === e.id.toString()), 1);
+        user.save((err) => {
+            if (err) return res.json(err);
+        });
+        return res.json("Task changed successfull");
+    })
+}
+
+module.exports = { getAllMarkers, editMarker, addMarker, removeMarker }

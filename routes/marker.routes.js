@@ -6,8 +6,9 @@ module.exports = () => {
     const api = Router();
 
     api.get('/getAllMarkers', MarkerController.getAllMarkers);
-    api.post('/addMarker', MarkerController.addMarker)
-    api.put('/editMarker', MarkerController.editMarker)
+    api.post('/addMarker', MarkerController.addMarker);
+    api.put('/editMarker', MarkerController.editMarker);
+    api.delete('/removeMarker', MarkerController.removeMarker);
 
     return api;
 }

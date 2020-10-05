@@ -16,7 +16,6 @@ async function register(req, res, next) {
                 console.log(err)
                 res.json(err.message);
             }
-
         } else {
             console.log("User has been registered successfully");
             res.json("User has been registered successfully");
