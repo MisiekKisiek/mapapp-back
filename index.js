@@ -18,31 +18,31 @@ passport();
 
 //Routes
 const authRoutes = require("./routes/authUser.routes");
-const markerRoutes = require('./routes/marker.routes');
+const markerRoutes = require("./routes/marker.routes");
 
 mongoose.connect(dbConfig.mongoURL, dbConfig.settings);
 mongoose.Promise = global.Promise;
-mongoose.set('useCreateIndex', true);
+mongoose.set("useCreateIndex", true);
 mongoose.connection.on("error", (err) => {
-    console.log("Could not connect to the database");
-    process.exit();
+  console.log("Could not connect to the database");
+  process.exit();
 });
 
 const app = express();
 
-
 app.use(express.json());
+app.use(express.static(path.resolve()));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 
 app.use("/auth", authRoutes());
-app.use('/api', jwtAuth, markerRoutes())
+app.use("/api", jwtAuth, markerRoutes());
 
 app.listen(8005, (err) => {
-    if (err) {
-        console.log("Jakiś błąd", err);
-    } else {
-        console.log("Serwer działa.");
-    }
+  if (err) {
+    console.log("Jakiś błąd", err);
+  } else {
+    console.log("Serwer działa.");
+  }
 });
