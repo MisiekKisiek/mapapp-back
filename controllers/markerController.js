@@ -53,6 +53,9 @@ async function editMarker(req, res, next) {
     ].place = place;
     user.markers[
       user.markers.findIndex((e) => markerId === e.id.toString())
+    ].name = name;
+    user.markers[
+      user.markers.findIndex((e) => markerId === e.id.toString())
     ].description = description;
     user.save((err) => {
       if (err) return res.json(err);

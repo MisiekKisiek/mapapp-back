@@ -31,10 +31,13 @@ mongoose.connection.on("error", (err) => {
 const app = express();
 
 app.use(express.json());
-app.use(express.static(path.resolve()));
+app.use(express.static(path.resolve(__dirname, "..", "front", "build"), {index: "index.html"}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:8005',
+  methods: ["GET", "POST", "PUT", "DELETE"]
+}));
 
 app.use("/auth", authRoutes());
 app.use("/api", jwtAuth, markerRoutes());
